@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder , FormGroup, Validators } from '@angular/forms';
+import { PayrollInfo } from 'src/app/models/app.models';
 import { PayrollService } from 'src/app/services/payroll.service';
 @Component({
   selector: 'app-input-section',
@@ -10,7 +11,7 @@ export class InputSectionComponent implements OnInit {
   payrollForm!: FormGroup;
   locations: string[] = ["stockholm","gothenburg"];
   years: string[] = ["2016","2017"];
-  @Output() salaryStatus = new EventEmitter<number>();
+  @Output() salaryStatus = new EventEmitter<PayrollInfo>();
   constructor(private fb: FormBuilder,private payrollService: PayrollService) { }
 
   ngOnInit(): void {
@@ -31,8 +32,8 @@ export class InputSectionComponent implements OnInit {
       return;
     }
     console.log(this.payrollForm.value)
-   const netSalary = this.payrollService.calculateSalary(this.payrollForm.value);
-    this.salaryStatus.emit(netSalary);
+   const payrollDetails: PayrollInfo = this.payrollService.calculateSalary(this.payrollForm.value);
+    this.salaryStatus.emit(payrollDetails);
   }
 
 }

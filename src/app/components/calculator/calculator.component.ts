@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PayrollInfo } from 'src/app/models/app.models';
 
 @Component({
   selector: 'app-calculator',
@@ -6,15 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calculator.component.scss']
 })
 export class CalculatorComponent implements OnInit {
-  salary : number;
+  salaryDetails : PayrollInfo;
   constructor() { }
 
   ngOnInit(): void {
   }
 
   netSalary(value){
-    this.salary = value;
-    console.log(value);
+    this.salaryDetails = value;
   }
 
 }

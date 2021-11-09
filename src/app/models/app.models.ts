@@ -4,3 +4,11 @@ export interface PayrollForm{
     location: string,
     incomeYear: string
 }
+
+export class PayrollInfo{
+    totalSalary: number;
+    payrollTax: number;
+    netSalary: number;
+    location: string;
+    incomeYear: string;
+}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BASIC_SALARY, EXTRA_TAX, HIKE_PERCENT, LOCATION_TAX } from '../constants/constant';
-import { PayrollForm } from '../models/app.models';
+import { BASIC_SALARY, EXTRA_TAX, LOCATION_TAX } from '../constants/constant';
+import { PayrollForm, PayrollInfo } from '../models/app.models';
 import { UtilityService } from './utility.service';
 
 
@@ -12,10 +12,15 @@ export class PayrollService {
    }
 
    calculateSalary(payrollForm: PayrollForm){
+    const payroll = new PayrollInfo()
     const basicSalary = BASIC_SALARY[payrollForm.profession.toUpperCase() as "DEVELOPER"];
-    const newSalary = this.utilityService.expereincedIncrementSalary(payrollForm.experience, basicSalary);
+    payroll.totalSalary = this.utilityService.expereincedIncrementSalary(payrollForm.experience, basicSalary);
 
-    return this.salaryAfterIncomeTax(newSalary, payrollForm.location, payrollForm.incomeYear);
+    payroll.netSalary = this.salaryAfterIncomeTax(payroll.totalSalary, payrollForm.location, payrollForm.incomeYear);
+    payroll.payrollTax = payroll.totalSalary - payroll.netSalary;
+    payroll.location = payrollForm.location;
+    payroll.incomeYear = payrollForm.incomeYear;
+    return payroll;
    }
 
    salaryAfterIncomeTax(salary: number, location: string, year: string){
@@ -28,25 +33,5 @@ export class PayrollService {
         return this.utilityService.getAmountAfterTax(36000, locationTax) + this.utilityService.getAmountAfterTax((45000-36000),EXTRA_TAX.CATEGORY_2) + this.utilityService.getAmountAfterTax((salary-45000),EXTRA_TAX.CATEGORY_3)
        }
    }
-
-//    getAmountAfterTax(amount: number, tax:number){
-//         return amount*(1-tax);
-//    }
-
-//    expereincedIncrementSalary(experience: number, basic: number){
-//     return basic + this.getExpereinceHikePercent(experience) * basic;
-//    }
-
-//    getExpereinceHikePercent(experience: number){
-//     if(experience >= 0 && experience <=3){
-//         return HIKE_PERCENT.CATEGORY_1;
-//     }else if(experience >= 4 && experience <=7){
-//         return HIKE_PERCENT.CATEGORY_2;
-//     }if(experience >= 8 && experience <=10){
-//         return HIKE_PERCENT.CATEGORY_3;
-//     }else{
-//         return HIKE_PERCENT.CATEGORY_4;
-//     }
-//    }
   
 }

@@ -1,30 +1,50 @@
-<h2>{{"Your New Salary after tax will be : " + (salary ? "SEK " + salary : 'Not available')}}</h2>
+<h2>
+  {{
+    "Your New Salary " +
+      (salaryDetails?.location ? "in " + salaryDetails?.location : "") +
+      " after tax will be : " +
+      (salaryDetails?.netSalary
+        ? "SEK " + salaryDetails?.netSalary
+        : "Not Available")
+  }}
+</h2>
 
 <div class="chartContainer">
-    <div id="chart">
-
-    </div>
+  <div id="chart"></div>
 </div>
 <div class="salaryDetails">
-    <mat-card class="cardContainer">
-        <span>
-            <strong> Total Salary </strong>
-        </span>
-        <span>
-            30000 KR
-        </span>
-    </mat-card>
-    <mat-card class="cardContainer"><span>
-        <strong> Payroll Tax </strong>
+  <mat-card class="cardContainer">
+    <span>
+      <strong> Total Salary </strong>
     </span>
     <span>
-        - 10000 KR
-    </span></mat-card>
-    <mat-card class="cardContainer"><span>
-        <strong>Net Salary</strong>
+      {{
+        salaryDetails?.totalSalary ? salaryDetails?.totalSalary + " KR" : "N/A"
+      }}
+    </span>
+  </mat-card>
+  <mat-card class="cardContainer orange"
+    ><span>
+      <strong> Payroll Tax </strong>
     </span>
     <span>
-         = 20000 KR
-    </span></mat-card>
+      {{
+        salaryDetails?.payrollTax
+          ? "- " + salaryDetails?.payrollTax + " KR"
+          : "N/A"
+      }}
+    </span></mat-card
+  >
+  <mat-card class="cardContainer green"
+    ><span>
+      <strong>Net Salary</strong>
+    </span>
+    <span>
+      {{
+        salaryDetails?.netSalary
+          ? "= " + salaryDetails?.netSalary + " KR"
+          : "N/A"
+      }}
+    </span></mat-card
+  >
 </div>
-
