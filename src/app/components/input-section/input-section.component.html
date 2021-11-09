@@ -1,0 +1,46 @@
+<div class="inputContainer">
+  <h2>Find out how much your salary is after tax</h2>
+  <form [formGroup]="payrollForm" class="normal-form" (submit)="onSubmit()">
+    <div class="formContainer">
+      <mat-form-field>
+        <input
+          formControlName="experience"
+          type="number"
+          matInput
+          min="0"
+          placeholder="Experience"
+          autocomplete="off"
+          [value] = "payrollForm.controls['experience'].value | nonegativevalue"
+        />
+        <mat-error>Experience is mandatory field.</mat-error>
+      </mat-form-field>
+      <mat-radio-group formControlName="profession">
+        <mat-radio-button value="developer">Developer</mat-radio-button>
+        <mat-radio-button value="teacher">Teacher</mat-radio-button>
+        <mat-radio-button value="cahier">Cashier</mat-radio-button>
+      </mat-radio-group>
+      <mat-form-field appearance="fill">
+        <mat-label>Location / City</mat-label>
+        <mat-select formControlName="location">
+          <mat-option *ngFor="let location of locations" [value]="location">
+            {{ location }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Location  is mandatory field.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Income Year</mat-label>
+        <mat-select formControlName="incomeYear">
+          <mat-option *ngFor="let year of years" [value]="year">
+            {{ year }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Income year is mandatory field.</mat-error>
+      </mat-form-field>
+
+      <div class="button-row">
+        <button mat-raised-button type="submit">Calculate Salary</button>
+      </div>
+    </div>
+  </form>
+</div>
